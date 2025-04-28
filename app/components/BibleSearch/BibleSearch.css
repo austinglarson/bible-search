@@ -1,0 +1,59 @@
+html {
+  overflow-y: scroll;
+}
+
+.BibleSearch {
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.BibleSearch .button {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+mark {
+  background-color: #ffff95;
+}
+
+.BibleSearchInput {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 1em;
+  font-size: 1.125rem;
+  font-weight: 500;
+  border-radius: 0.25rem;
+  border: 1px solid #adadad;
+}
+.BibleSearchInput::placeholder {
+  color: #979797;
+  font-weight: 400;
+}
+.BibleSearchInput:focus {
+  outline: 4px solid #dfdfdf;
+  box-shadow: 0 0 10px 5px #eaeaea;
+}
+
+.BibleVerse {
+  padding: 0.5rem;
+}
+.BibleVerse + .BibleVerse, .BibleSearchResults + .BibleSearchResults {
+  border-top: 1px solid #dfdfdf;
+}
+.BibleVerse.hidden {
+  display: none;
+}
+.BibleVerse a {
+  color: gray;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+.BibleVerse a:hover {
+  text-decoration: underline;
+}
+.BibleVerse p {
+  margin: 0.125rem 0 0;
+  line-height: 1.375;
+}
