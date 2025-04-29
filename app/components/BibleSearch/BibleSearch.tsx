@@ -30,8 +30,7 @@ export function BibleSearch() {
   useEffect(() => {
     const fetchBibles = async () => {
       try {
-        const filePaths = ['asv.json', 'kjv.json', 'net.json'];
-        //const filePaths = ['kjv.json'];
+        const filePaths = ['net.json', 'kjv.json', 'asv.json'];
         const promises = filePaths.map(path => fetch(path).then(response => response.json()));
         const results = await Promise.all(promises);
         setBibleData(results);
@@ -60,84 +59,40 @@ export function BibleSearch() {
     setSearchValue(e.target.value);
   }
 
-  // Search through all versions but only show unique verses
-  /* function searchBibles(searchText: string) {
-    const maxResults = 50;
+  function searchBibles(searchText: string) {
     const pattern = new RegExp(searchText, 'i'); // Case-insensitive match
+    const versesFound = new Set<string>(); // Set to store unique found verses by key
+    const results: Verse[] = []; // Array to store unique verses
 
-    // Set to keep track of unique verses (by book/chapter/verse)
-    const versesFound = new Set<string>();
-
-    const results = bibleData.flatMap(bible =>
-      bible.verses.filter(verse => {
-        // Search the verse text, book name, and chapter:verse
-        const match = pattern.test(verse.text) || 
-                      pattern.test(verse.book_name) || 
-                      pattern.test(`${verse.chapter}:${verse.verse}`);
-
+    setShowAllVerses(false);
+    
+    for (const bible of bibleData) {
+      for (const verse of bible.verses) {
+        // Check if the verse matches the search query (in text, book, or chapter:verse)
+        const match =
+          pattern.test(verse.text) ||
+          pattern.test(verse.book_name) ||
+          pattern.test(`${verse.chapter}:${verse.verse}`) ||
+          pattern.test(`${verse.book_name} ${verse.chapter}:${verse.verse}`);
+    
         if (match) {
-          // Create a unique key based on book, chapter, and verse
           const uniqueKey = `${verse.book_name} ${verse.chapter}:${verse.verse}`;
-
+          verse.bible_version = bible.metadata.module;
+    
           if (!versesFound.has(uniqueKey)) {
-            versesFound.add(uniqueKey); // Add to the seen set if this verse is not already included
-            return true;  // Include this verse in the results
-          }
-        }
-
-        return false; // Exclude this verse if it's already in results
-      })
-    );
-  
-    if (results.length >= maxResults) break;
-
-    return results;
-  } */
-
-    //const maxResults = 50; // Maximum number of results
-
-    // TODO: search bibles after 50 and so on when done typing
-    function searchBibles(searchText: string) {
-      const pattern = new RegExp(searchText, 'i'); // Case-insensitive match
-      const versesFound = new Set<string>(); // To store unique verses
-      const results: Verse[] = []; // To store the results
-
-      setShowAllVerses(false);
-    
-      for (const bible of bibleData) {
-        // Stop searching if we've already reached the max number of results
-        //if (results.length >= 50 && results.length % 50 === 0) break;
-    
-        for (const verse of bible.verses) {
-          // Check if the verse matches the search query (in text, book, or chapter:verse)
-          const match =
-            pattern.test(verse.text) ||
-            pattern.test(verse.book_name) ||
-            pattern.test(`${verse.chapter}:${verse.verse}`);
-    
-          if (match) {
-            const uniqueKey = `${verse.book_name} ${verse.chapter}:${verse.verse}`;
-            verse.bible_version = bible.metadata.module;
-    
-            if (!versesFound.has(uniqueKey)) {
-              versesFound.add(uniqueKey); // Mark this verse as found
-              results.push(verse); // Add the verse to the results
-    
-              // If we've reached the max results, stop searching further
-              /* if (results.length >= 50 && results.length % 50 === 0) {
-                break;
-              } */
-            }
+            versesFound.add(uniqueKey); // Mark this verse as found
+            results.push(verse); // Add the verse to the results
           }
         }
       }
-
-      console.log(results.length);
-      return results; // Return the results array
     }
+
+    return results;
+  }
 
   return (
     <div className="BibleSearch">
+      <h1>Bible Search</h1>
       <input type="text" value={searchValue} onChange={handleSearchInput} className="BibleSearchInput" placeholder="Search word, verse, chapter, book..." />
 
       {searchValue !== '' && <div className="BibleSearchResultData">{searchResults.length} verses found.</div>}

@@ -4,8 +4,8 @@ import Footer from '~/components/Footer';
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Bible Search" },
+    { name: "description", content: "Search the Bible by word, chapter, or verse." },
   ];
 }
 
@@ -13,7 +13,6 @@ export default function Home() {
   return (
     <>
     <main>
-      <h1>Bible Search</h1>
       <BibleSearch />
     </main>
     <Footer />

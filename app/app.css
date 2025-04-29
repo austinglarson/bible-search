@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -23,13 +27,6 @@ footer {
 
 h1, h2, h3, h4 {
   font-weight: 850;
-}
-
-h1 {
-  width: 100%;
-  max-width: 768px;
-  margin: 0 auto;
-  padding: 3rem 0 1.5rem;
 }
 
 .button {

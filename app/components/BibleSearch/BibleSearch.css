@@ -9,6 +9,10 @@ html {
   padding: 0 1rem;
 }
 
+.BibleSearch  h1 {
+  margin: 2.5rem 0 1.5rem;
+}
+
 .BibleSearch .button {
   width: 100%;
   margin-top: 0.5rem;
@@ -49,6 +53,7 @@ mark {
   color: gray;
   font-size: 0.875rem;
   text-decoration: none;
+  pointer-events: none;
 }
 .BibleVerse a:hover {
   text-decoration: underline;
