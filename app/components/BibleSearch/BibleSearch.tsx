@@ -21,19 +21,19 @@ export type Verse = {
   text: string;
 };
 
-export function BibleSearch() {
-  const [bibleData, setBibleData] = useState<Bible[]>([]);
+export default function BibleSearch() {
+  const [biblesData, setBiblesData] = useState<Bible[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [searchResults, setSearchResults] = useState<Verse[]>([]);
   const [showAllVerses, setShowAllVerses] = useState(false);
 
   useEffect(() => {
-    const fetchBibles = async () => {
+    async function fetchBibles() {
       try {
         const filePaths = ['net.json', 'kjv.json', 'asv.json'];
         const promises = filePaths.map(path => fetch(path).then(response => response.json()));
         const results = await Promise.all(promises);
-        setBibleData(results);
+        setBiblesData(results);
       } catch (error) {
         console.error("Error fetching files:", error);
       }
@@ -53,7 +53,7 @@ export function BibleSearch() {
     }, 100); // wait 100ms after typing
 
     return () => clearTimeout(timeout);
-  }, [searchValue, bibleData]);  
+  }, [searchValue, biblesData]);  
 
   function handleSearchInput(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchValue(e.target.value);
@@ -66,7 +66,7 @@ export function BibleSearch() {
 
     setShowAllVerses(false);
     
-    for (const bible of bibleData) {
+    for (const bible of biblesData) {
       for (const verse of bible.verses) {
         // Check if the verse matches the search query (in text, book, or chapter:verse)
         const match =

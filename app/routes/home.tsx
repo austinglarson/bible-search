@@ -1,6 +1,5 @@
 import type { Route } from "./+types/home";
-import { BibleSearch } from "~/components/BibleSearch/BibleSearch";
-import Footer from '~/components/Footer';
+import BibleSearch from "~/components/BibleSearch/BibleSearch";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -15,7 +14,6 @@ export default function Home() {
     <main>
       <BibleSearch />
     </main>
-    <Footer />
     </>
   )
 }

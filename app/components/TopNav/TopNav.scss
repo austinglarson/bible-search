@@ -1,0 +1,21 @@
+.TopNav {
+  border-bottom: 1px solid #dfdfdf;
+
+  nav {
+    width: 100%;
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 1rem;
+
+    a {
+      margin-right: 1rem;
+      color: #000;
+      font-size: 0.875rem;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--color-blue);
+      }
+    }
+  }
+}
