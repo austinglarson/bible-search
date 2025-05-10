@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from "react-router";
+import { useParams, useSearchParams  } from "react-router";
 import type { Route } from './+types/bible';
 import BibleBook from "~/components/Bible/BibleBook";
 
@@ -59,35 +59,14 @@ async function getBible(bibleVersion: string): Promise<Bible | null> {
 
 export default function Bible() {
   const params = useParams();
+  const [searchParams] = useSearchParams();
   const [bibleData, setBibleData] = useState<Bible | null>(null);
   const [bibleLocation, setBibleLocation] = useState<BibleLocation>({
-    version: params.version ?? 'net',
-    book: params.book ?? 'Genesis',
-    chapter: params.chapter ? parseInt(params.chapter) : 1,
-    verse: params.verse ? parseInt(params.verse) : 1,
+    version: searchParams.get('v') || 'net',
+    book: params.book ? params.book.replaceAll('-', ' ') : 'Genesis',
+    chapter: params.chapter ? parseInt(params.chapter) : 0,
+    verse: params.verse ? parseInt(params.verse) : 0,
   });
-
-  /* useEffect(() => {
-    if (params) {
-      setBibleLocation({
-        version: params.version ?? 'net',
-        book: params.book ?? 'Genesis',
-        chapter: params.chapter ? parseInt(params.chapter) : 1,
-        verse: params.verse ? parseInt(params.verse) : 1,
-      });
-    }
-  }, [params]); */
-
-  /* async function getBible(): Promise<Bible | null> {
-    try {
-      const response = await fetch(`${bibleLocation.version}.json`);
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Error fetching files:", error);
-      return null;
-    }
-  } */
 
   useEffect(() => {
     async function fetchBible() {
@@ -101,7 +80,6 @@ export default function Bible() {
   return (
     <>
     <main>
-      <h1>Bible</h1>
       {!bibleData ? <p>Loading...</p> :
       <BibleBook bibleData={bibleData} bibleLocation={bibleLocation} />
       }

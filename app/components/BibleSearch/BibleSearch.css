@@ -20,6 +20,7 @@ html {
 
 mark {
   background-color: #ffff95;
+  background-color: #fff5d6;
 }
 
 .BibleSearchInput {
@@ -53,7 +54,6 @@ mark {
   color: gray;
   font-size: 0.875rem;
   text-decoration: none;
-  pointer-events: none;
 }
 .BibleVerse a:hover {
   text-decoration: underline;

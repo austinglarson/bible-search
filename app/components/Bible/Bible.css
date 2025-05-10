@@ -1,4 +1,17 @@
-html {
+.BibleChapter {
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 0 1rem;
+
+  .selected {
+    background-color: #ffff95;
+    background-color: #fff5d6;
+  }
+
+}
+
+/* html {
   overflow-y: scroll;
 }
 
@@ -61,4 +74,4 @@ mark {
 .BibleVerse p {
   margin: 0.125rem 0 0;
   line-height: 1.375;
-}
+} */
